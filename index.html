@@ -3,55 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>不安タイプ診断テスト</title>
-  <style>
-    /* --- CSSをここにまとめて記述 --- */
-    body {
-      font-family: sans-serif;
-      margin: 20px;
-      line-height: 1.5;
-    }
-    h1 {
-      color: #333;
-    }
-    .question {
-      margin-bottom: 20px;
-      padding: 10px;
-      border: 1px solid #ccc;
-    }
-    .question p {
-      font-weight: bold;
-    }
-    .score-select {
-      margin-top: 5px;
-    }
-    .score-select label {
-      margin-right: 10px;
-    }
-    .btn-submit {
-      background-color: #5cb85c;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      margin-top: 20px;
-      font-size: 1rem;
-    }
-    .btn-submit:hover {
-      background-color: #4cae4c;
-    }
-    .result-section {
-      margin-top: 30px;
-      padding: 15px;
-      border: 2px solid #aaa;
-    }
-    .result-section h2 {
-      margin-bottom: 10px;
-    }
-    .highlight {
-      color: #d9534f; /* 赤系 */
-      font-weight: bold;
-    }
-  </style>
+  <!-- CSSファイルの読み込み -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -60,7 +13,7 @@
 あくまで自己チェック用であり、正式な診断ではありません。</p>
 
 <form id="anxietyForm">
-  <!-- 質問: 1～20 (name属性はQ1, Q2, ..., Q20) -->
+  <!-- 質問: 1〜20 (name属性はQ1, Q2, ..., Q20) -->
   <div class="question">
     <p>1.「先々のこと」を考えて、根拠のない不安や焦りに襲われることが多い。</p>
     <div class="score-select">
@@ -112,7 +65,7 @@
     </div>
   </div>
   <div class="question">
-    <p>6. 物事を 100% 完璧にしないと気が済まないが、実際には疲れ果てる。</p>
+    <p>6. 物事を100%完璧にしないと気が済まないが、実際には疲れ果てる。</p>
     <div class="score-select">
       <label><input type="radio" name="Q6" value="1">1</label>
       <label><input type="radio" name="Q6" value="2">2</label>
@@ -272,90 +225,7 @@
   <div id="resultText"></div>
 </div>
 
-<script>
-  /* 
-    JavaScriptロジック：
-    - 各質問の値を取得し、8つの不安タイプ別に集計。
-    - 各タイプの合計得点を計算し、結果を表示。
-  */
-  function calculateResult() {
-    const form = document.getElementById('anxietyForm');
-    let answers = {};
-
-    // 1〜20のラジオボタンを取得
-    for (let i = 1; i <= 20; i++) {
-      let qName = 'Q' + i;
-      let checked = form[qName].value; // 選択された値（文字列）
-      if (!checked) {
-        alert(`質問${i}が未回答です。すべて回答してください。`);
-        return;
-      }
-      answers[qName] = parseInt(checked, 10); 
-    }
-
-    // 各タイプの関連質問と合計を管理
-    let scores = {
-      future: 0,      // 未来予報ビクビク型(将来不安)
-      social: 0,      // 人間関係オロオロ型(対人不安)
-      evaluation: 0,  // 評価ドキドキ型(評価不安)
-      perfection: 0,  // 完璧主義パニック型(完璧主義)
-      health: 0,      // 健康オタオタ型(健康不安)
-      existential: 0, // 存在意義グラグラ型(存在論的不安)
-      trauma: 0,      // トラウマシンドローム型(トラウマ起因)
-      pressure: 0,    // プレッシャー爆発型(高ストレス環境)
-    };
-
-    // タイプ別の関連する質問番号 (サンプル)
-    // Q1, Q3, Q11 → future
-    // Q2, Q4, Q12, Q18 → social
-    // Q5, Q19 → evaluation
-    // Q6, Q13 → perfection
-    // Q7, Q14 → health
-    // Q8, Q15 → existential
-    // Q9, Q16 → trauma
-    // Q10, Q17, Q20 → pressure
-
-    // 将来不安
-    scores.future += answers.Q1 + answers.Q3 + answers.Q11;
-    // 対人不安
-    scores.social += answers.Q2 + answers.Q4 + answers.Q12 + answers.Q18;
-    // 評価不安
-    scores.evaluation += answers.Q5 + answers.Q19;
-    // 完璧主義
-    scores.perfection += answers.Q6 + answers.Q13;
-    // 健康不安
-    scores.health += answers.Q7 + answers.Q14;
-    // 存在論的不安
-    scores.existential += answers.Q8 + answers.Q15;
-    // トラウマ起因
-    scores.trauma += answers.Q9 + answers.Q16;
-    // 高ストレス環境
-    scores.pressure += answers.Q10 + answers.Q17 + answers.Q20;
-
-    // 結果文を作成
-    let resultMessage = "<ul>";
-    resultMessage += generateTypeResult("未来予報ビクビク型（将来不安）", scores.future);
-    resultMessage += generateTypeResult("人間関係オロオロ型（対人不安）", scores.social);
-    resultMessage += generateTypeResult("評価ドキドキ型（評価不安）", scores.evaluation);
-    resultMessage += generateTypeResult("完璧主義パニック型（完璧主義）", scores.perfection);
-    resultMessage += generateTypeResult("健康オタオタ型（健康不安）", scores.health);
-    resultMessage += generateTypeResult("存在意義グラグラ型（存在論的不安）", scores.existential);
-    resultMessage += generateTypeResult("トラウマシンドローム型（トラウマ起因）", scores.trauma);
-    resultMessage += generateTypeResult("プレッシャー爆発型（高ストレス環境）", scores.pressure);
-    resultMessage += "</ul>";
-
-    // 表示
-    document.getElementById('resultText').innerHTML = resultMessage;
-    document.getElementById('resultSection').style.display = "block";
-  }
-
-  // 各タイプのスコア表示を簡単にするヘルパー関数
-  function generateTypeResult(typeName, score) {
-    // 質問数に応じて最大得点は異なる (例: 1問5点の場合は最大5点、2問は10点、3問は15点…)
-    // ここでは一律「スコアが高いほど不安が強い」と想定する簡易表記
-    return `<li><span class="highlight">${typeName}：${score}点</span></li>`;
-  }
-</script>
-
+<!-- JavaScriptファイルの読み込み -->
+<script src="script.js"></script>
 </body>
 </html>
