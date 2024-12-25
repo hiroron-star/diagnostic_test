@@ -1,0 +1,55 @@
+/* --- 共通スタイル --- */
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    line-height: 1.5;
+  }
+  h1 {
+    color: #333;
+  }
+  
+  /* --- 質問エリア --- */
+  .question {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  .question p {
+    font-weight: bold;
+  }
+  .score-select {
+    margin-top: 5px;
+  }
+  .score-select label {
+    margin-right: 10px;
+  }
+  
+  /* --- ボタン --- */
+  .btn-submit {
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+  .btn-submit:hover {
+    background-color: #4cae4c;
+  }
+  
+  /* --- 結果表示エリア --- */
+  .result-section {
+    margin-top: 30px;
+    padding: 15px;
+    border: 2px solid #aaa;
+  }
+  .result-section h2 {
+    margin-bottom: 10px;
+  }
+  
+  .highlight {
+    color: #d9534f; /* 赤系 */
+    font-weight: bold;
+  }
+  
